@@ -9,6 +9,7 @@ mvc from koa2
 
 ### aok.controller
 * controller.ctx
+* controller.assets
 * controller.render
 * controller.request
 * controller.response
