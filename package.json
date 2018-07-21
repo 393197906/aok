@@ -1,6 +1,6 @@
 {
-  "name": "aok",
-  "version": "1.0.0",
+  "name": "aoko",
+  "version": "1.0.1",
   "description": "",
   "main": "./framework/index.js",
   "scripts": {

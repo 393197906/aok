@@ -1,13 +1,13 @@
-# aok
+# aoko
 mvc from koa2
 
 ## api
-### aok
-* aok.start 
-* aok.controller
-* aok.service
+### aoko
+* aoko.start 
+* aoko.controller
+* aoko.service
 
-### aok.controller
+### aoko.controller
 * controller.ctx
 * controller.assets
 * controller.render
@@ -19,7 +19,7 @@ mvc from koa2
 * controller.session
 * controller.redirect
 
-### aok.service
+### aoko.service
 * service.ctx
 * service.config
 * service.util

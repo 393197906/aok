@@ -1,2 +1,2 @@
-const aok = require("./framework/index")
-aok.start();
+const aoko = require("./framework/index")
+aoko.start();
