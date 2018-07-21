@@ -10,7 +10,7 @@ module.exports = app => {
             throw "middleware err"
         }
         config = app => {
-            const middlewares = entityMiddlewares(app.config);
+            const middlewares = entityMiddlewares(app);
             if (middlewares) {
                 Object.keys(middlewares).map(item => {
                     if (typeof middlewares[item] === 'function') {

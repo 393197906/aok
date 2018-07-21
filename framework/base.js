@@ -4,7 +4,10 @@ module.exports.Service = class {
         Object.keys(mount).map(key => {
             this[key] = mount[key]
         })
+        //session
+        this.session = this.ctx.session;
     }
+
 }
 
 module.exports.Controller = class {
@@ -33,7 +36,9 @@ module.exports.Controller = class {
                     };
                 } : () => {
                     throw new Error("not set view,cant't use assets");
-                }
+                };
+                //session
+                this.session = this.ctx.session;
             })()
 
         }
