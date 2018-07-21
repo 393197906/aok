@@ -16,10 +16,14 @@ mvc from koa2
 * controller.util
 * controller.config
 * controller.service
+* controller.session
+* controller.redirect
 
 ### aok.service
 * service.ctx
 * service.config
+* service.util
 * service.service
+* service.session
 
 

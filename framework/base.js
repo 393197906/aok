@@ -39,6 +39,8 @@ module.exports.Controller = class {
                 };
                 //session
                 this.session = this.ctx.session;
+                //redirect
+                this.redirect = this.ctx.redirect
             })()
 
         }
