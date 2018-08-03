@@ -3,7 +3,7 @@ mvc from koa2
 
 ## api
 ### aoko
-* aoko.start 
+* aoko.start
 * aoko.controller
 * aoko.service
 
@@ -18,6 +18,10 @@ mvc from koa2
 * controller.service
 * controller.session
 * controller.redirect
+* controller.params
+* controller.query
+* controller.queryBody
+
 
 ### aoko.service
 * service.ctx

@@ -3,7 +3,7 @@ module.exports.Service = class {
     constructor(mount) {
         Object.keys(mount).map(key => {
             this[key] = mount[key]
-        })
+        });
         //session
         this.session = this.ctx.session;
     }
@@ -14,7 +14,7 @@ module.exports.Controller = class {
     constructor(mount) {
         Object.keys(mount).map(key => {
             this[key] = mount[key]
-        })
+        });
         if (this.ctx) {
             this.request = this.ctx.request;
             this.response = this.ctx.response;
@@ -22,20 +22,33 @@ module.exports.Controller = class {
             (() => {
                 //模板
                 this.render = this.ctx.render ? async (template) => {
-                    await this.ctx.render.apply(this, [template, assets])
+                    await this.ctx.render(template, assets)
                 } : () => {
                     throw new Error("not set view ");
-                }
+                };
                 //赋值
                 this.assets = this.ctx.render ? (obj) => {
                     if (!_.isObject(obj)) {
                         throw new Error("assets params must be object");
                     }
-                    assets = { ...assets,
+                    assets = {
+                        ...assets,
                         ...obj
                     };
                 } : () => {
                     throw new Error("not set view,cant't use assets");
+                };
+                //params
+                this.params = this.ctx.params
+                this.query = this.ctx.query
+                this.queryBody = this.ctx.request.body
+                //return
+                this.success = (result = {}) => {
+                    this.ctx.body = {
+                        status: 200,
+                        message: "成功",
+                        result
+                    }
                 };
                 //session
                 this.session = this.ctx.session;
@@ -49,7 +62,8 @@ module.exports.Controller = class {
             return {
                 [key]: this.service[key](this.ctx)
             }
-        }).reduce((obj, item) => ({ ...obj,
+        }).reduce((obj, item) => ({
+            ...obj,
             ...item
         }))
     }
