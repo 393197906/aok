@@ -15,7 +15,9 @@ module.exports = {
             config,
             util
         }
-        const router = require("./entityRouter")(invockMount(controller, { ...mounts,
+        app.config = config; //挂载app config
+        const router = require("./entityRouter")(invockMount(controller, {
+            ...mounts,
             service: invockMount(service, mounts)
         }))
         app = entityMiddleware(app)
