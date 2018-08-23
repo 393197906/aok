@@ -8,9 +8,9 @@ try {
 } catch (e) {
 
 }
-module.exports = serviceFiles.map(item => {
+module.exports = serviceFiles.filter(item => item.indexOf('Service') > -1).map(item => {
     const file = path.resolve(rootDir, `./src/service/${item}`)
-    const key = item.replace(".js", "")
+    const key = item.replace("Service.js", "")
     return {
         key,
         value: require(file)

@@ -8,9 +8,9 @@ try {
 } catch (e) {
 
 }
-module.exports = controllerFiles.map(item => {
+module.exports = controllerFiles.filter(item => item.indexOf('Controller') > -1).map(item => {
     const file = path.resolve(rootDir, `./src/controller/${item}`)
-    const key = item.replace(".js", "")
+    const key = item.replace("Controller.js", "")
     return {
         key,
         value: require(file)
