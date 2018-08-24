@@ -1,7 +1,7 @@
 {
   "name": "aoko",
-  "version": "2.0.0",
-  "description": "",
+  "version": "2.1.0",
+  "description": "aoko",
   "main": "./framework/index.js",
   "scripts": {
     "dev": "nodemon"
