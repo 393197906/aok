@@ -1,8 +1,9 @@
 module.exports = app => [{
-        method: "get",
-        url: "/",
-        controller: "index:index"
-    },
+    method: "get",
+    url: "/",
+    controller: "index:index",
+    middleware: 'auth'
+},
     {
         method: "get",
         url: "/test",

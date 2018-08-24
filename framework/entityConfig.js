@@ -24,7 +24,8 @@ const config = configFiles.map(item => {
         [item.key]: item.value
     }
 }).reduce((obj, item) => {
-    return { ...obj,
+    return {
+        ...obj,
         ...item
     }
 }, {})

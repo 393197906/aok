@@ -3,7 +3,7 @@ const fs = require('fs')
 const process = require('process')
 const koaRouter = require('koa-router')();
 const rootDir = process.cwd()
-module.exports = (controllers) => {
+module.exports = (controllers, routerMiddleware = {}) => {
     let routersConstruct = () => []
     try {
         routersConstruct = require(path.resolve(rootDir, "./src/router"))
@@ -18,18 +18,41 @@ module.exports = (controllers) => {
         const {
             method,
             url,
-            controller
+            controller,
+            middleware
         } = item;
         const actions = controller.split(":");
         const eclass = actions[0] || "index";
         const eaction = actions[1] || "index";
         if (!controllers[eclass]) return;
-        koaRouter[method.toLowerCase().trim()](url, async (ctx, next) => {
+        //处理中间件
+        const middlewareArray = (() => {
+            let middlewareArray = [];
+            if (middleware) {
+                let middlewareStringArray = [];
+                if (typeof middleware === 'string') {
+                    middlewareStringArray = middleware.split(',');
+                } else if (Array.isArray(middleware)) {
+                    middlewareStringArray = middleware;
+                }
+                middlewareArray = middlewareStringArray.reduce((container, item) => {
+                    if (routerMiddleware[item.toString()]) {
+                        container.push(
+                            routerMiddleware[item.toString()]
+                        )
+                    }
+                    return container;
+                }, [])
+            }
+            return middlewareArray;
+        })();
+        const routerParmsArr = [url, ...middlewareArray, async (ctx, next) => {
             let controller = controllers[eclass](ctx);
             if (controller[eaction]) {
                 await controller[eaction]()
             }
-        })
+        }]
+        koaRouter[method.toLowerCase().trim()].apply(koaRouter, routerParmsArr)
     })
     return koaRouter
 }
