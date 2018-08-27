@@ -22,8 +22,8 @@ module.exports = (controllers, routerMiddleware = {}) => {
             middleware
         } = item;
         const actions = controller.split(":");
-        const eclass = actions[0] || "index";
-        const eaction = actions[1] || "index";
+        const eclass = actions.filter((item, index) => index <= actions.length - 2).join(":") || "";
+        const eaction = actions[actions.length - 1] || "";
         if (!controllers[eclass]) return;
         //处理中间件
         const middlewareArray = (() => {

@@ -22,6 +22,7 @@ module.exports = {
             ...mounts,
             service: invockMount(service, mounts)
         }), routerMiddleware)
+        return;
         app = entityMiddleware(app)
         app.use(router.routes()).use(router.allowedMethods());
         app.listen(config.port || 4000);
