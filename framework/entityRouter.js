@@ -36,7 +36,9 @@ module.exports = (controllers, routerMiddleware = {}) => {
                     middlewareStringArray = middleware;
                 }
                 middlewareArray = middlewareStringArray.reduce((container, item) => {
-                    if (routerMiddleware[item.toString()]) {
+                    if (typeof item === 'function') {
+                        container.push(item)
+                    } else if (routerMiddleware[item.toString()]) {
                         container.push(
                             routerMiddleware[item.toString()]
                         )
