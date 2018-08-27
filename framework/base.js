@@ -66,11 +66,23 @@ module.exports.Controller = class {
         //     ...obj,
         //     ...item
         // }))
-        this.service = Object.keys(this.service).reduce((container, key) => {
-            const obj = {
-                [key]: this.service[key](this.ctx)
-            };
-            return {...container, ...obj}
-        }, {})
+        const service = this.service;
+        // this.service = Object.keys(this.service).reduce((container, key) => {
+        //     const obj = {
+        //         [key]: this.service[key](this.ctx)
+        //     };
+        //     return {...container, ...obj}
+        // }, {})
+        const cache = {}; //缓存服务
+        this.service = (serviceName) => {
+            if (typeof service[serviceName] !== 'function') {
+                this.ctx.throw(501, `not fount service ${serviceName}`)
+            }
+            //缓存服务
+            if (cache[serviceName]) {
+                return cache[serviceName]
+            }
+            return cache[serviceName] = service[serviceName](this.ctx)
+        }
     }
 }

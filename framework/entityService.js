@@ -1,19 +1,19 @@
 const path = require('path')
-const fs = require('fs')
 const process = require('process')
+const util = require('./util')
 const rootDir = process.cwd()
-let serviceFiles = []
-try {
-    serviceFiles = fs.readdirSync(path.resolve(rootDir, "./src/service"))
-} catch (e) {
+let serviceFiles = util.getFileList(path.resolve(rootDir, "./src/service"));
 
-}
 module.exports = serviceFiles.filter(item => item.indexOf('Service') > -1).map(item => {
-    const file = path.resolve(rootDir, `./src/service/${item}`)
-    const key = item.replace("Service.js", "")
+    const exFileArray = item.split('service')
+    const exFile = exFileArray[exFileArray.length - 1];
+    const baseFilesArray = exFile.split(path.sep);
+    const baseFilesArrayFilter = baseFilesArray.filter(item => item);
+    baseFilesArrayFilter[baseFilesArrayFilter.length - 1] = baseFilesArrayFilter[baseFilesArrayFilter.length - 1].replace("Service.js", "");
+    const key = baseFilesArrayFilter.join(':');
     return {
         key,
-        value: require(file)
+        value: require(item)
     }
 }).filter(item => item.value && typeof item.value === "function").map(item => {
     return {
