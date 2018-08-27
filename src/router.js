@@ -9,4 +9,4 @@ module.exports = app => [{
         url: "/test",
         controller: "index:test"
     }
-]
+];

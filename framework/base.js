@@ -58,13 +58,19 @@ module.exports.Controller = class {
 
         }
         //实例化service
-        this.service = Object.keys(this.service).map(key => {
-            return {
+        // this.service = Object.keys(this.service).map(key => {
+        //     return {
+        //         [key]: this.service[key](this.ctx)
+        //     }
+        // }).reduce((obj, item) => ({
+        //     ...obj,
+        //     ...item
+        // }))
+        this.service = Object.keys(this.service).reduce((container, key) => {
+            const obj = {
                 [key]: this.service[key](this.ctx)
-            }
-        }).reduce((obj, item) => ({
-            ...obj,
-            ...item
-        }))
+            };
+            return {...container, ...obj}
+        }, {})
     }
 }
