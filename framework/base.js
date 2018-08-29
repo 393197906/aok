@@ -13,7 +13,7 @@ module.exports.Controller = class {
         Object.keys(mount).map(key => {
             this[key] = mount[key]
         });
-        
+
         const service = this.service;
         const cache = {}; //缓存服务
         this.service = (serviceName) => {
