@@ -1,2 +1,2 @@
 const aoko = require("./framework/index")
-aoko.start();
+aoko.app().start();

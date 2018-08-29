@@ -4,7 +4,8 @@
   "description": "aoko",
   "main": "./framework/index.js",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -22,11 +23,13 @@
     "walk": "^2.3.14"
   },
   "devDependencies": {
-    "nodemon": "^1.18.3",
     "axios": "^0.18.0",
     "ejs": "^2.6.1",
     "koa-logger": "^3.2.0",
     "koa-static": "^5.0.0",
-    "koa-views": "^6.1.4"
+    "koa-views": "^6.1.4",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3",
+    "supertest": "^3.1.0"
   }
 }

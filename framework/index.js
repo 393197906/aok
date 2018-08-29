@@ -2,7 +2,7 @@ const base = require("./base.js")
 module.exports = {
     controller: base.Controller,
     service: base.Service,
-    start: () => {
+    app: () => {
         const Koa = require('koa');
         let app = new Koa();
         const config = require("./entityConfig")
@@ -24,10 +24,13 @@ module.exports = {
         }), routerMiddleware)
         app = entityMiddleware(app)
         app.use(router.routes()).use(router.allowedMethods());
-        app.listen(config.port || 4000);
-        console.log(`serve run http://localhost:${config.port || 4000}`);
-        app.on('error', err => {
-            console.error('server error', err)
-        });
+        app.start = function () {
+            this.listen(config.port || 4000);
+            console.log(`serve run http://localhost:${config.port || 4000}`);
+            this.on('error', err => {
+                console.error('server error', err)
+            });
+        }
+        return app;
     }
 }

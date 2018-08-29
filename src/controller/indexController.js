@@ -1,8 +1,7 @@
 const Controller = require("../../framework/base").Controller
 module.exports = class extends Controller {
-
     async index() {
-        this.ctx.body = this.service("minus").test();
+        this.ctx.body =  123
     }
 
     test() {
