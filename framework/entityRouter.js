@@ -3,14 +3,14 @@ const fs = require('fs')
 const process = require('process')
 const koaRouter = require('koa-router')();
 const rootDir = process.cwd()
-module.exports = (controllers, routerMiddleware = {}) => {
+module.exports = (app, controllers, routerMiddleware = {}) => {
     let routersConstruct = () => []
     try {
         routersConstruct = require(path.resolve(rootDir, "./src/router"))
     } catch (e) {
 
     }
-    const router = routersConstruct(controllers);
+    const router = routersConstruct({config:app.config,middleware:app.routerMiddleware});
     router.filter(item => {
         const methodAllows = ["get", "delete", "post", "put"]
         return item.method && item.url && item.controller && methodAllows.find(ii => ii === item.method.toLowerCase().trim())
@@ -32,15 +32,17 @@ module.exports = (controllers, routerMiddleware = {}) => {
                 let middlewareStringArray = [];
                 if (typeof middleware === 'string') {
                     middlewareStringArray = middleware.split(',');
+                } else if (typeof middleware === 'function') {
+                    middlewareStringArray = [middleware]
                 } else if (Array.isArray(middleware)) {
                     middlewareStringArray = middleware;
                 }
                 middlewareArray = middlewareStringArray.reduce((container, item) => {
                     if (typeof item === 'function') {
                         container.push(item)
-                    } else if (routerMiddleware[item.toString()]) {
+                    } else if (app.routerMiddleware[item.toString()]) {
                         container.push(
-                            routerMiddleware[item.toString()]
+                            app.routerMiddleware[item.toString()]
                         )
                     }
                     return container;

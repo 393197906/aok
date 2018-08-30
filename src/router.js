@@ -1,7 +1,8 @@
-module.exports = app => [{
+module.exports = ({config, middleware}) => [{
     method: "get",
     url: "/",
     controller: "index:index",
+    middleware: middleware.auth
 },
     {
         method: "get",

@@ -12,16 +12,17 @@ module.exports = {
         const invockMount = require("./invockMount")
         const entityMiddleware = require("./entityMiddleware")
 
-        app.config = config; //挂载app config
         const routerMiddleware = require("./entityRouterMiddleware")(app);
+        app.config = config; //挂载app config
+        app.routerMiddleware = routerMiddleware; //挂载app 路由中间件
         const mounts = {
             config,
             util,
         }
-        const router = require("./entityRouter")(invockMount(controller, {
+        const router = require("./entityRouter")(app, invockMount(controller, {
             ...mounts,
             service: invockMount(service, mounts)
-        }), routerMiddleware)
+        }))
         app = entityMiddleware(app)
         app.use(router.routes()).use(router.allowedMethods());
         app.start = function () {
